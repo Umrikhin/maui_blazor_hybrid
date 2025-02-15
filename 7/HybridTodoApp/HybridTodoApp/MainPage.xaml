@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:HybridTodoApp"
+             xmlns:pages="clr-namespace:HybridTodoApp.Components.Pages"
+             xmlns:pagesShared="clr-namespace:HybridTodoAppComponents.Pages;assembly=HybridTodoAppComponents"
+             x:Class="HybridTodoApp.MainPage"
+             BackgroundColor="White">
+
+    <!--<Grid RowDefinitions="*, Auto">
+        <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">
+            <BlazorWebView.RootComponents>
+                <RootComponent Selector="#app" ComponentType="{x:Type local:Routes}" />
+            </BlazorWebView.RootComponents>
+        </BlazorWebView>
+        <Button Margin="10" Text="Нативная кнопка" Grid.Row="1" Clicked="Button_Clicked" />
+    </Grid>-->
+
+    <ContentPage Title="Домой">
+        <BlazorWebView HostPage="wwwroot/index.html">
+            <BlazorWebView.RootComponents>
+                <RootComponent Selector="#app" ComponentType="{x:Type pages:Home}" />
+            </BlazorWebView.RootComponents>
+        </BlazorWebView>
+    </ContentPage>
+
+    <ContentPage Title="Счетчик">
+        <BlazorWebView HostPage="wwwroot/index.html">
+            <BlazorWebView.RootComponents>
+                <RootComponent Selector="#app" ComponentType="{x:Type pages:Counter}" />
+            </BlazorWebView.RootComponents>
+        </BlazorWebView>
+    </ContentPage>
+
+    <ContentPage Title="Данные">
+        <BlazorWebView HostPage="wwwroot/index.html">
+            <BlazorWebView.RootComponents>
+                <RootComponent Selector="#app" ComponentType="{x:Type pages:Weather}" />
+            </BlazorWebView.RootComponents>
+        </BlazorWebView>
+    </ContentPage>
+
+    <ContentPage Title="Задачи">
+        <BlazorWebView HostPage="wwwroot/index.html">
+            <BlazorWebView.RootComponents>
+                <RootComponent Selector="#app" ComponentType="{x:Type pagesShared:Todo}" />
+            </BlazorWebView.RootComponents>
+        </BlazorWebView>
+    </ContentPage>
+
+    <pages:NewPage Title="Новая"></pages:NewPage>
+
+</TabbedPage>

@@ -1,0 +1,62 @@
+﻿@page "/todo"
+@rendermode RenderMode.InteractiveServer
+@using HybridTodoAppComponents.Data
+@using Microsoft.Maui.Networking
+@inject TodoService todoService
+@inject IConnectivity connectivityService
+
+<h3>Todo (@todos.Count(todo => !todo.IsDone))</h3>
+
+@if (!hasInternet)
+{
+    <p>Нет интернета!!!!</p>
+}
+
+<ul>
+    @foreach(var todo in todos)
+    {
+        <li>
+            <input type="checkbox" @bind="todo.IsDone" />
+            <input @bind="@todo.Title" />
+        </li>
+    }
+</ul>
+
+<input placeholder="Заполните задачу" @bind="newTodo" />
+<button @onclick="AddTodo">Добавть в список дел</button>
+<button @onclick="Save">Сохранить</button>
+<button @onclick="Upload">Загрузить</button>
+
+@code {
+    List<TodoItem> todos = new List<TodoItem>();
+    string? newTodo;
+    bool hasInternet = true;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var items = todoService.LoadItems();
+        todos.AddRange(items);
+    }
+
+    void Save()
+    {
+        todoService.SaveItems(todos);
+    }
+
+    void Upload()
+    {
+        if (connectivityService is null) {
+            //Application.Current?.MainPage?.DisplayAlert("Родной интерфейс", "Эта кнопка из нативного интерфейса", "Ok");
+            return;
+        }
+        hasInternet = connectivityService.NetworkAccess == NetworkAccess.Internet;
+    }
+
+    void AddTodo()
+    {
+        if (string.IsNullOrWhiteSpace(newTodo)) return;
+        todos.Add(new TodoItem() { Title = newTodo });
+        newTodo = string.Empty;
+    }
+}
